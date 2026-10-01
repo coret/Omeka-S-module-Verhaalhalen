@@ -1,0 +1,117 @@
+# Dutch translation for the Omeka S module Verhaalhalen.
+# Copyright (C) 2026 Bob Coret
+# This file is distributed under the same license as the Verhaalhalen module.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Verhaalhalen 0.1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-01 18:00+0200\n"
+"PO-Revision-Date: 2026-10-01 18:00+0200\n"
+"Last-Translator: Bob Coret\n"
+"Language-Team: Dutch\n"
+"Language: nl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: config/module.ini:4
+msgid "Verhaalhalen"
+msgstr "Verhaalhalen"
+
+#: config/module.ini:5
+msgid "Publishes site pages as NDE Story (Verhaalhalen) JSON-LD: a SCHEMA-AP-NDE record via format=verhaalhalen and the text content via format=verhaalhalen-content. Adds a page block for the story's metadata."
+msgstr "Publiceert sitepagina's als NDE Story (Verhaalhalen) JSON-LD: een SCHEMA-AP-NDE-record via format=verhaalhalen en de tekstinhoud via format=verhaalhalen-content. Voegt een paginablok toe voor de metadata van het verhaal."
+
+#: Module.php:112
+msgid "A collection has no single content document. Request one site page with format=verhaalhalen-content, or the collection with format=verhaalhalen."
+msgstr "Een verzameling heeft geen enkelvoudig content-document. Vraag één sitepagina op met format=verhaalhalen-content, of de verzameling met format=verhaalhalen."
+
+#: Module.php:116 Module.php:203
+msgid "The Verhaalhalen formats are only available for site pages (/api/site_pages)."
+msgstr "De Verhaalhalen-formaten zijn alleen beschikbaar voor sitepagina's (/api/site_pages)."
+
+#: Module.php:127
+msgid "The NDE Story document could not be built."
+msgstr "Het NDE Story-document kon niet worden opgebouwd."
+
+#: Module.php:172
+msgid "This page has no NDE Story content: none of its blocks holds text."
+msgstr "Deze pagina heeft geen NDE Story-inhoud: geen van de blokken bevat tekst."
+
+#: src/Site/BlockLayout/Verhaalhalen.php:41
+msgid "Verhaalhalen (NDE Story)"
+msgstr "Verhaalhalen (NDE Story)"
+
+#: src/Site/BlockLayout/Verhaalhalen.php:52
+msgid "The licence must be a URL, such as https://creativecommons.org/licenses/by/4.0/."
+msgstr "De licentie moet een URL zijn, zoals https://creativecommons.org/licenses/by/4.0/."
+
+#: src/Site/BlockLayout/Verhaalhalen.php:63
+msgid "The JSON-LD is not valid JSON: %s"
+msgstr "De JSON-LD is geen geldige JSON: %s"
+
+#: src/Site/BlockLayout/Verhaalhalen.php:67
+msgid "The JSON-LD must be a JSON object whose keys are Schema.org properties, such as {\"about\": [...]}."
+msgstr "De JSON-LD moet een JSON-object zijn met Schema.org-eigenschappen als sleutels, zoals {\"about\": [...]}."
+
+#: src/Site/BlockLayout/Verhaalhalen.php:70
+msgid "The JSON-LD may not set %s: the module writes those itself."
+msgstr "De JSON-LD mag %s niet zetten: dat schrijft de module zelf."
+
+#: view/common/block-layout/verhaalhalen-form.phtml:38
+msgid "This block renders nothing on the page. It marks the page as a story for the Verhaalhalen formats (format=verhaalhalen and format=verhaalhalen-content on the page's API URL) and supplies the record with what the page itself cannot say."
+msgstr "Dit blok toont niets op de pagina. Het markeert de pagina als verhaal voor de Verhaalhalen-formaten (format=verhaalhalen en format=verhaalhalen-content op de API-URL van de pagina) en levert het record wat de pagina zelf niet kan zeggen."
+
+#: view/common/block-layout/verhaalhalen-form.phtml:43
+msgid "Subtitle"
+msgstr "Ondertitel"
+
+#: view/common/block-layout/verhaalhalen-form.phtml:44
+msgid "Rendered below the title (alternativeHeadline)."
+msgstr "Wordt onder de titel getoond (alternativeHeadline)."
+
+#: view/common/block-layout/verhaalhalen-form.phtml:53
+msgid "Abstract"
+msgstr "Samenvatting"
+
+#: view/common/block-layout/verhaalhalen-form.phtml:54
+msgid "One or two sentences (schema:abstract)."
+msgstr "Een of twee zinnen (schema:abstract)."
+
+#: view/common/block-layout/verhaalhalen-form.phtml:63
+msgid "Description"
+msgstr "Beschrijving"
+
+#: view/common/block-layout/verhaalhalen-form.phtml:64
+msgid "A longer description (schema:description). When empty, the first paragraph of the text is used."
+msgstr "Een langere beschrijving (schema:description). Leeg: de eerste alinea van de tekst wordt gebruikt."
+
+#: view/common/block-layout/verhaalhalen-form.phtml:73
+msgid "Licence"
+msgstr "Licentie"
+
+#: view/common/block-layout/verhaalhalen-form.phtml:74
+msgid "URL of the licence of the text, when it differs from the configured default, e.g. https://creativecommons.org/licenses/by-sa/4.0/."
+msgstr "URL van de licentie van de tekst, als die afwijkt van de geconfigureerde standaard, bv. https://creativecommons.org/licenses/by-sa/4.0/."
+
+#: view/common/block-layout/verhaalhalen-form.phtml:83
+msgid "Period"
+msgstr "Periode"
+
+#: view/common/block-layout/verhaalhalen-form.phtml:84
+msgid "The period the story is about, as an ISO 8601 interval such as 1572/1795 (schema:temporalCoverage)."
+msgstr "De periode waarover het verhaal gaat, als ISO 8601-interval zoals 1572/1795 (schema:temporalCoverage)."
+
+#: view/common/block-layout/verhaalhalen-form.phtml:93
+msgid "Additional record properties (JSON-LD)"
+msgstr "Aanvullende record-eigenschappen (JSON-LD)"
+
+#: view/common/block-layout/verhaalhalen-form.phtml:95
+msgid "A JSON object of Schema.org properties added to the record, in the plain Schema.org context: about, contentLocation, genre, creator, dateCreated, ... Typically the DefinedTerms found through the Network of Terms. Values here win over the module's configuration."
+msgstr "Een JSON-object met Schema.org-eigenschappen die aan het record worden toegevoegd, in de gewone Schema.org-context: about, contentLocation, genre, creator, dateCreated, ... Doorgaans de DefinedTerms die via het Termennetwerk zijn gevonden. Waarden hier gaan vóór de configuratie van de module."
+
+#: view/common/block-layout/verhaalhalen-form.phtml:96
+msgid "Not allowed, because the module writes them itself: %s."
+msgstr "Niet toegestaan, omdat de module ze zelf schrijft: %s."

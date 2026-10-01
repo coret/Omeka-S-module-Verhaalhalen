@@ -19,7 +19,7 @@
     "@value": "2026-09-25"
   },
   "sdDatePublished": {
-    "@type": "Date",
+    "@type": "http://www.w3.org/2001/XMLSchema#date",
     "@value": "2026-10-01"
   },
   "creator": {
@@ -75,6 +75,9 @@
       "encodingFormat": "application/ld+json;profile='https://verhaalhalen.ruimdetijd.nl/api/1/context.jsonld'",
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
+      },
+      "thumbnailUrl": {
+        "@id": "https://example.org/api/site_pages/1?format=verhaalhalen-content"
       }
     }
   ]

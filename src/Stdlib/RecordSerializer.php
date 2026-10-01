@@ -65,7 +65,9 @@ class RecordSerializer
         if (!empty($pageInfo['modified'])) {
             $record['dateModified'] = ['@type' => 'Date', '@value' => substr($pageInfo['modified'], 0, 10)];
         }
-        $record['sdDatePublished'] = ['@type' => 'Date', '@value' => $today ?: date('Y-m-d')];
+        // The profile's shapes want xsd:date here, where the other dates are
+        // schema:Date; the spec's own example record does the same.
+        $record['sdDatePublished'] = ['@type' => 'http://www.w3.org/2001/XMLSchema#date', '@value' => $today ?: date('Y-m-d')];
 
         $abstract = trim((string) ($metadata['abstract'] ?? ''));
         if ('' !== $abstract) {
@@ -119,10 +121,14 @@ class RecordSerializer
         foreach ($story->allImages() as $image) {
             $media[] = $this->image($image, $urls['story']);
         }
+        // The spec's content entry, plus a thumbnailUrl the spec does not ask
+        // for: the profile's MediaObject shape requires one, and without it the
+        // entry fails the shape and the record no longer validates.
         $media[] = [
             '@id' => $urls['content'],
             '@type' => ['MediaObject', 'TextObject'],
             'contentUrl' => ['@id' => $urls['content']],
+            'thumbnailUrl' => ['@id' => $urls['content']],
             'encodingFormat' => sprintf(self::CONTENT_ENCODING_FORMAT, $this->settings['context_url']),
             'license' => ['@id' => $license],
         ];
