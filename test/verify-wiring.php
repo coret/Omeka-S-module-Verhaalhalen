@@ -207,6 +207,33 @@ $plain->setResponse($untouched);
 $module->onFinish($plain);
 $v->check('a response of another format is left alone', 'application/ld+json' === $untouched->getHeaders()->get('Content-Type')->getFieldValue());
 
+// ------------------------------------------------------------- collection
+
+$v->section('The collection ignores core pagination and reports its own total');
+
+$v->check(
+    'pagination and output arguments are stripped from the query the collection re-runs',
+    ['site_id' => 2, 'sort_by' => 'title'] === Verhaalhalen\Module::collectionQuery([
+        'site_id' => 2, 'page' => 4, 'per_page' => 25, 'limit' => 5, 'offset' => 1,
+        'format' => 'verhaalhalen', 'pretty_print' => 1, 'sort_by' => 'title',
+    ])
+);
+
+$response = new Laminas\Http\Response();
+$response->getHeaders()->addHeaderLine('Link', '<https://x.example/api/site_pages?page=2>; rel="next"');
+$response->getHeaders()->addHeaderLine('Omeka-S-Total-Results', '72');
+$mvcEvent = new Laminas\Mvc\MvcEvent();
+$mvcEvent->setResponse($response);
+$total = new ReflectionProperty($module, 'collectionTotal');
+$total->setAccessible(true);
+$total->setValue($module, 1);
+$module->onFinish($mvcEvent);
+$v->check('the pagination Link header is dropped: the collection is not paginated', !$response->getHeaders()->has('Link'));
+$v->check(
+    'the total is the number of stories, not of pages',
+    '1' === ($response->getHeaders()->get('Omeka-S-Total-Results') ? $response->getHeaders()->get('Omeka-S-Total-Results')->getFieldValue() : null)
+);
+
 // ----------------------------------------------------------------- settings
 
 $v->section('Settings');
@@ -237,6 +264,14 @@ $v->check(
     'the content URL is the same with format=verhaalhalen-content',
     'https://canonical.example/omeka/api/site_pages/88?format=verhaalhalen-content' === $urls->contentUrl(88),
     $urls->contentUrl(88)
+);
+
+$collectionRequest = new Laminas\Http\Request();
+$collectionRequest->setUri('https://request.example/omeka/api/site_pages?site_id=2&format=verhaalhalen&pretty_print=1&callback=x');
+$v->check(
+    'the collection @id keeps the query but not the output-only arguments',
+    'https://canonical.example/omeka/api/site_pages?site_id=2&format=verhaalhalen' === $urls->requestUrl($collectionRequest),
+    $urls->requestUrl($collectionRequest)
 );
 
 $ported = new Verhaalhalen\Stdlib\Urls(fakeUrlHelper(), 'http://inside.example:8080');

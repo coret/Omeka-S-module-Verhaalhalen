@@ -68,11 +68,18 @@ class Urls
     /**
      * The URL the client asked for, as the collection's @id.
      *
+     * Arguments that only shape the output (pretty_print, callback) are left
+     * out, so that the same collection has the same @id however it was asked.
+     *
      * @return string
      */
     public function requestUrl(HttpRequest $request)
     {
-        return $this->applyBaseUrl($request->getUriString());
+        $uri = new HttpUri($request->getUriString());
+        $query = $uri->getQueryAsArray();
+        unset($query['pretty_print'], $query['callback']);
+        $uri->setQuery($query ? http_build_query($query) : null);
+        return $this->applyBaseUrl($uri->toString());
     }
 
     /**

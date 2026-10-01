@@ -64,6 +64,11 @@ class Module extends AbstractModule
      */
     protected $contentType;
 
+    /**
+     * @var int|null Number of stories in the collection just rendered
+     */
+    protected $collectionTotal;
+
     public function getConfig()
     {
         return include sprintf('%s/config/module.config.php', __DIR__);
@@ -167,6 +172,23 @@ class Module extends AbstractModule
             $headers->addHeader(new GenericHeader('Content-Type', $this->contentType));
             $this->contentType = null;
         }
+        if (null !== $this->collectionTotal) {
+            // Core described the page of results it hydrated; the collection
+            // is not paginated, so its Link header would mislead and its total
+            // counts pages rather than stories.
+            $headers = $response->getHeaders();
+            $stale = [];
+            foreach ($headers as $header) {
+                if (in_array(strtolower($header->getFieldName()), ['link', 'omeka-s-total-results'], true)) {
+                    $stale[] = $header;
+                }
+            }
+            foreach ($stale as $header) {
+                $headers->removeHeader($header);
+            }
+            $headers->addHeader(new GenericHeader('Omeka-S-Total-Results', (string) $this->collectionTotal));
+            $this->collectionTotal = null;
+        }
         if ($this->notModified) {
             $this->notModified = false;
             $response->setStatusCode(304);
@@ -215,7 +237,17 @@ class Module extends AbstractModule
     }
 
     /**
-     * @param SitePageRepresentation[] $pages
+     * The collection: every story the query matches, whatever page of results
+     * core happened to hydrate.
+     *
+     * Core paginates the API query before this listener sees it, and the
+     * marked pages are a handful among many, so the first page of results is
+     * usually empty while the stories sit on page four. The payload is
+     * therefore only used to confirm the resource; the stories themselves come
+     * from a second, unpaginated search restricted to pages that carry a
+     * Verhaalhalen block.
+     *
+     * @param SitePageRepresentation[] $pages The hydrated page of results
      * @return array
      */
     protected function renderCollection(array $pages)
@@ -225,13 +257,20 @@ class Module extends AbstractModule
         $urlBuilder = $services->get('Verhaalhalen\Urls');
         $source = $services->get('Verhaalhalen\BlockSource');
 
-        $items = [];
         foreach ($pages as $page) {
             if (!$page instanceof SitePageRepresentation) {
                 throw new BadRequestException($this->translate(
                     'The Verhaalhalen formats are only available for site pages (/api/site_pages).' // @translate
                 ));
             }
+        }
+
+        $request = $services->get('Request');
+        $query = $request instanceof HttpRequest ? self::collectionQuery($request->getQuery()->toArray()) : [];
+        $onlyMarked = !empty($settingsService->forSite(null)['only_marked']);
+
+        $items = [];
+        foreach ($this->collectionPages($query, $onlyMarked) as $page) {
             $site = $page->site();
             $settings = $settingsService->forSite($site ? $site->slug() : null);
             if (!empty($settings['only_marked']) && !PageMetadata::isMarked($page)) {
@@ -244,13 +283,52 @@ class Module extends AbstractModule
                 'type' => $settings['record_type'] ?: 'Article',
             ];
         }
+        $this->collectionTotal = count($items);
 
-        $request = $services->get('Request');
         $collectionUrl = $request instanceof HttpRequest ? $urlBuilder->requestUrl($request) : '';
         $name = (string) $services->get('Omeka\Settings')->get('installation_title');
 
         $this->addCollectionHeaders($settingsService->forSite(null));
         return (new CollectionSerializer($settingsService->forSite(null)))->serialize($items, $collectionUrl, $name);
+    }
+
+    /**
+     * The API query the collection re-runs: the client's arguments without
+     * pagination and without what only concerns the output.
+     *
+     * @return array
+     */
+    public static function collectionQuery(array $query)
+    {
+        unset($query['page'], $query['per_page'], $query['limit'], $query['offset'],
+            $query['format'], $query['pretty_print'], $query['callback']);
+        return $query;
+    }
+
+    /**
+     * @param bool $onlyMarked Restrict to pages carrying a Verhaalhalen block
+     * @return SitePageRepresentation[]
+     */
+    protected function collectionPages(array $query, $onlyMarked)
+    {
+        $services = $this->getServiceLocator();
+        if ($onlyMarked) {
+            // One cheap query for the marked page ids, so that only the
+            // stories are ever hydrated, however many pages the site has.
+            $markedIds = array_map('intval', $services->get('Omeka\Connection')
+                ->executeQuery('SELECT DISTINCT page_id FROM site_page_block WHERE layout = ?', [PageMetadata::LAYOUT])
+                ->fetchFirstColumn());
+            if (isset($query['id'])) {
+                $markedIds = array_values(array_intersect($markedIds, array_map('intval', (array) $query['id'])));
+            }
+            if (!$markedIds) {
+                return [];
+            }
+            $query['id'] = $markedIds;
+        }
+        // Visibility is the API's business: an anonymous client gets public
+        // pages of public sites, as everywhere else.
+        return $services->get('Omeka\ApiManager')->search('site_pages', $query)->getContent();
     }
 
     /**

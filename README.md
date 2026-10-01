@@ -25,7 +25,8 @@ directions. Those findings are in [Design decisions](#design-decisions) and
 ## Requesting a story
 
 There is no new route. Every URL is the page's API URL plus a `format`. Live,
-for the Gouda Tijdmachine story *Tijddetective Gouda*:
+for the Gouda Tijdmachine story *Tijddetective Gouda* (page 89, which carries a
+Verhaalhalen block):
 
 ```bash
 # the record (SCHEMA-AP-NDE CreativeWork)
@@ -71,24 +72,27 @@ comments say where each value comes from.
   "@context": "https://schema.org",
   "@type": ["CreativeWork", "Article"],
   "@id": "https://www.goudatijdmachine.nl/omeka/api/site_pages/89?format=verhaalhalen",
-  "name": {"@language": "nl", "@value": "Tijddetective Gouda: stadsgame brengt echte Gouwenaars tot leven"},
+  "name": {"@language": "nl", "@value": "Tijddetective Gouda"},
   "identifier": "tijddetective-gouda",                                 // the page slug
   "url": {"@id": "https://www.goudatijdmachine.nl/omeka/s/data/page/tijddetective-gouda"},
   "inLanguage": "nl",                                                 // the site's locale
   "dateCreated": {"@type": "Date", "@value": "2026-10-01"},
   "dateModified": {"@type": "Date", "@value": "2026-10-01"},
   "sdDatePublished": {"@type": "http://www.w3.org/2001/XMLSchema#date", "@value": "2026-10-01"},
-  "description": {"@language": "nl", "@value": "Gouda heeft er een bijzondere manier bij om de stad te ontdekken. …"},
+  "abstract": {"@language": "nl", "@value": "Met de nieuwe, gratis smartphonegame 'Tijddetective Gouda' kunnen spelers …"},
+                                                                      // Verhaalhalen block
+  "description": {"@language": "nl", "@value": "In Gouda is de nieuwe, gratis stadsgame 'Tijddetective Gouda' gelanceerd, …"},
                                                                       // Verhaalhalen block, else the first paragraph
+  "temporalCoverage": "2026",                                         // Verhaalhalen block
   "text": {"@language": "nl", "@value": "Gouda heeft er een bijzondere manier bij … Historische Vereniging …"},
                                                                       // the plain full text, derived
   "creator": {"@type": "Organization", "name": {"@language": "nl", "@value": "Gouda Tijdmachine"},
               "url": {"@id": "https://www.goudatijdmachine.nl/"}},   // configuration
-  "license": {"@id": "https://creativecommons.org/licenses/by/4.0/"}, // block or configuration
+  "license": {"@id": "https://creativecommons.org/licenses/by-sa/4.0/"}, // block, else configuration
   "isPartOf": {"@id": "https://n2t.net/ark:/60537/bD64Hu", "@type": "Dataset",
                "name": {"@language": "nl", "@value": "Gouda Tijdmachine 🕓 Kennisgraaf"}},
   "additionalType": {"@type": "DefinedTerm", "name": {"@language": "nl", "@value": "verhaal"}},
-  // "abstract", "temporalCoverage", "about", "contentLocation", … appear once the page has a Verhaalhalen block
+  // "about", "contentLocation", "genre", … come from the block's JSON-LD field
   "associatedMedia": [
     {"@type": "ImageObject",
      "@id": "https://www.goudatijdmachine.nl/omeka/api/site_pages/89?format=verhaalhalen#image-1",
@@ -102,7 +106,7 @@ comments say where each value comes from.
      "contentUrl": {"@id": "https://www.goudatijdmachine.nl/omeka/api/site_pages/89?format=verhaalhalen-content"},
      "thumbnailUrl": {"@id": "https://www.goudatijdmachine.nl/omeka/api/site_pages/89?format=verhaalhalen-content"},
      "encodingFormat": "application/ld+json;profile='https://verhaalhalen.ruimdetijd.nl/api/1/context.jsonld'",
-     "license": {"@id": "https://creativecommons.org/licenses/by/4.0/"}}
+     "license": {"@id": "https://creativecommons.org/licenses/by-sa/4.0/"}}   // the licence of the text
   ]
 }
 ```
@@ -118,8 +122,8 @@ comments say where each value comes from.
   "@type": ["MediaObject", "TextObject"],
   "@id": "https://www.goudatijdmachine.nl/omeka/api/site_pages/89?format=verhaalhalen-content",
   "encodesCreativeWork": {"@id": "https://www.goudatijdmachine.nl/omeka/api/site_pages/89?format=verhaalhalen"},
-  "headline": "Tijddetective Gouda: stadsgame brengt echte Gouwenaars tot leven",
-  // "alternativeHeadline": the block's subtitle, if any
+  "headline": "Tijddetective Gouda",                                        // the page title
+  "alternativeHeadline": "Stadsgame brengt echte Gouwenaars tot leven",      // the block's subtitle
   "hasPart": [
     {"@type": ["TextObject", "Paragraph"], "@id": "#text-1",
      "text": "Gouda heeft er een bijzondere manier bij om de stad te ontdekken. Op zaterdag 12 september werd in de tuin van Museum Gouda de nieuwe stadsgame Tijddetective Gouda gelanceerd. …"},
@@ -164,15 +168,19 @@ The spec leaves listing to the implementation. This mirrors Verhaalhalen's own
   "hasPart": [
     {"@id": "https://www.goudatijdmachine.nl/omeka/api/site_pages/89?format=verhaalhalen",
      "@type": ["CreativeWork", "Article"],
-     "name": {"@language": "nl", "@value": "Tijddetective Gouda: stadsgame brengt echte Gouwenaars tot leven"}}
+     "name": {"@language": "nl", "@value": "Tijddetective Gouda"}}
   ]
 }
 ```
 
-Only pages carrying a Verhaalhalen block are listed (see below); Omeka's
-pagination (`per_page`, `page`, the `Link` and `Omeka-S-Total-Results` headers)
-applies to the pages *before* that filter, so a page of results can hold fewer
-stories than `per_page`, and the total counts all pages of the query.
+Only pages carrying a Verhaalhalen block are listed (see below), and the
+collection is **not paginated**: every story the query matches is in it, with
+`Omeka-S-Total-Results` giving their number. `page` and `per_page` are ignored.
+Omeka paginates the API query before the module sees it, and the stories are a
+handful among many pages, so a paginated collection would show an empty first
+page while the stories sat on page four; the module therefore re-runs the query
+without pagination, restricted to the marked pages, which keeps it cheap
+however many pages a site has.
 
 ## The Verhaalhalen page block
 
@@ -436,9 +444,12 @@ input for the spec, each with what this module does in the meantime.
     title. The distinction costs nothing but a reader may wonder.
 11. **The Collection is not specified.** The module copies the reference
     server's `/api/stories` shape. A sentence in §7 would make it normative.
-12. **Pagination versus filtering.** Listing only marked pages inside a paginated
-    API query means a page of results can be shorter than `per_page`; the
-    alternative, a dedicated route, would leave Omeka's query arguments behind.
+12. **Listing on top of a paginated API.** The spec leaves listing open, and an
+    implementation that filters stories out of a general-purpose query collides
+    with that query's pagination: the first page of results was empty while the
+    one story sat on page four. The module drops pagination for the collection
+    and re-queries only the marked pages. A spec-level listing route with its
+    own paging rules would spare every implementation this choice.
 
 ## Validating the output
 
