@@ -3,6 +3,7 @@ namespace Verhaalhalen;
 
 use Laminas\EventManager\Event;
 use Laminas\EventManager\SharedEventManagerInterface;
+use Laminas\Http\Header\GenericHeader;
 use Laminas\Http\Request as HttpRequest;
 use Laminas\Http\Response as HttpResponse;
 use Laminas\Mvc\MvcEvent;
@@ -58,6 +59,11 @@ class Module extends AbstractModule
      */
     protected $notModified = false;
 
+    /**
+     * @var string|null Content-Type to restore on finish, see onFinish()
+     */
+    protected $contentType;
+
     public function getConfig()
     {
         return include sprintf('%s/config/module.config.php', __DIR__);
@@ -93,6 +99,13 @@ class Module extends AbstractModule
         $format = $event->getParam('format');
         if (!in_array($format, [self::FORMAT_RECORD, self::FORMAT_CONTENT], true)) {
             return;
+        }
+        if (self::FORMAT_CONTENT === $format) {
+            // Core builds the Content-Type header from the registered media type
+            // through Laminas' ContentType class, which re-assembles the
+            // parameters without their quotes and so turns the profile into an
+            // invalid header value. onFinish() puts the exact string back.
+            $this->contentType = self::MEDIA_TYPE_CONTENT;
         }
         $model = $event->getParam('model');
         if ($model instanceof ApiJsonModel && $model->getException()) {
@@ -134,12 +147,28 @@ class Module extends AbstractModule
      */
     public function onFinish(MvcEvent $event)
     {
-        if (!$this->notModified) {
+        $response = $event->getResponse();
+        if (!$response instanceof HttpResponse) {
             return;
         }
-        $this->notModified = false;
-        $response = $event->getResponse();
-        if ($response instanceof HttpResponse) {
+        if ($this->contentType) {
+            $headers = $response->getHeaders();
+            $stale = [];
+            foreach ($headers as $header) {
+                if ('content-type' === strtolower($header->getFieldName())) {
+                    $stale[] = $header;
+                }
+            }
+            foreach ($stale as $header) {
+                $headers->removeHeader($header);
+            }
+            // A GenericHeader is sent verbatim; a ContentType header would be
+            // re-assembled and lose the quotes again.
+            $headers->addHeader(new GenericHeader('Content-Type', $this->contentType));
+            $this->contentType = null;
+        }
+        if ($this->notModified) {
+            $this->notModified = false;
             $response->setStatusCode(304);
             $response->setContent('');
         }

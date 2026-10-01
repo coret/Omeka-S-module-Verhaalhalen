@@ -1,0 +1,52 @@
+{
+  "@context": [
+    "https://verhaalhalen.ruimdetijd.nl/api/1/context.jsonld",
+    {
+      "@base": "https://example.org/api/site_pages/1?format=verhaalhalen",
+      "@language": "nl"
+    }
+  ],
+  "@type": [
+    "MediaObject",
+    "TextObject"
+  ],
+  "@id": "https://example.org/api/site_pages/1?format=verhaalhalen-content",
+  "encodesCreativeWork": {
+    "@id": "https://example.org/api/site_pages/1?format=verhaalhalen"
+  },
+  "headline": "Met leestijd",
+  "hasPart": [
+    {
+      "@type": [
+        "TextObject",
+        "Quote"
+      ],
+      "@id": "#text-1",
+      "text": "Leestijd: vijf minuten."
+    },
+    {
+      "@type": [
+        "TextObject",
+        "Head"
+      ],
+      "@id": "#head-1",
+      "text": "Kop"
+    },
+    {
+      "@type": [
+        "TextObject",
+        "Paragraph"
+      ],
+      "@id": "#text-2",
+      "text": "Echte eerste alinea."
+    },
+    {
+      "@type": [
+        "TextObject",
+        "Paragraph"
+      ],
+      "@id": "#text-3",
+      "text": "Tweede."
+    }
+  ]
+}

@@ -170,6 +170,43 @@ $event = new Laminas\EventManager\Event('api.output.serialize', null, [
 $module->serialize($event);
 $v->check('a collection has no single content document: 400', $model->getException() instanceof Omeka\Mvc\Exception\InvalidJsonException);
 
+// ------------------------------------------------------------- content type
+
+$v->section('The content document keeps its quoted profile parameter');
+
+// Laminas re-assembles Content-Type from its parsed parts and drops the quotes
+// around the profile, which leaves an invalid header; onFinish() restores it.
+$response = new Laminas\Http\Response();
+$response->getHeaders()->addHeaderLine('Content-Type', 'application/json; charset=utf-8');
+$response->getHeaders()->addHeaderLine('Content-Type', 'application/ld+json; profile=https://verhaalhalen.ruimdetijd.nl/api/1/context.jsonld');
+$mvcEvent = new Laminas\Mvc\MvcEvent();
+$mvcEvent->setResponse($response);
+
+$module->serialize(new Laminas\EventManager\Event('api.output.serialize', null, [
+    'model' => new Omeka\View\Model\ApiJsonModel(new Omeka\Api\Response([])),
+    'payload' => [], 'format' => 'verhaalhalen-content', 'output' => '[]',
+]));
+$module->onFinish($mvcEvent);
+$contentTypes = [];
+foreach ($response->getHeaders() as $header) {
+    if ('Content-Type' === $header->getFieldName()) {
+        $contentTypes[] = $header->toString();
+    }
+}
+$v->check('exactly one Content-Type is left', 1 === count($contentTypes), implode(' | ', $contentTypes));
+$v->check(
+    'and it is the registered media type, quotes included',
+    ['Content-Type: ' . Verhaalhalen\Module::MEDIA_TYPE_CONTENT] === $contentTypes,
+    implode(' | ', $contentTypes)
+);
+
+$untouched = new Laminas\Http\Response();
+$untouched->getHeaders()->addHeaderLine('Content-Type', 'application/ld+json');
+$plain = new Laminas\Mvc\MvcEvent();
+$plain->setResponse($untouched);
+$module->onFinish($plain);
+$v->check('a response of another format is left alone', 'application/ld+json' === $untouched->getHeaders()->get('Content-Type')->getFieldValue());
+
 // ----------------------------------------------------------------- settings
 
 $v->section('Settings');

@@ -1,0 +1,12 @@
+{
+  "title": "Met leestijd",
+  "language": "nl",
+  "record": true,
+  "fragments": [
+    {
+      "type": "html",
+      "html": "<blockquote><p>Leestijd: vijf minuten.</p></blockquote><h2>Kop</h2><p>Echte eerste alinea.</p><p>Tweede.</p>"
+    }
+  ],
+  "metadata": {}
+}

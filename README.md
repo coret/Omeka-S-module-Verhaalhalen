@@ -160,7 +160,7 @@ so that a client can find the story from the page.
 |---|---|---|
 | Subtitle | `alternativeHeadline` (content) | rendered below the title |
 | Abstract | `abstract` | |
-| Description | `description` | when empty, the first paragraph of the text is used (configurable) |
+| Description | `description` | when empty, the first `Opener` or `Paragraph` of the text is used (configurable) |
 | Licence | `license` | a URL; also becomes the licence of the content entry |
 | Period | `temporalCoverage` | an ISO 8601 interval such as `1572/1795` |
 | Additional record properties | anything | a JSON object of Schema.org properties, merged into the record |
@@ -210,7 +210,7 @@ shipped values are Gouda Tijdmachine's — a worked example, to be replaced.
 | `license` | Licence of the text when the block gives none. |
 | `image_license` | Licence of images that carry none of their own. |
 | `additional_type`, `genre` | DefinedTerms, one or a list; `null` omits. |
-| `description_fallback` | `first_paragraph` or `null`. |
+| `description_fallback` | `first_paragraph` (the first `Opener` or `Paragraph`, so that a story opening with a block quote is not described by it) or `null`. |
 | `only_marked` | List only pages with a Verhaalhalen block in the collection. |
 | `max_age` | `Cache-Control: max-age` for anonymous responses. |
 | `authority_prefixes` | Hyperlinks starting with one of these become `linking` annotations with the target as body `@id` (an authority IRI). |
@@ -441,7 +441,8 @@ matches no shape and "conforms" vacuously. And Jena fetches the remote contexts
 
 Gouda Tijdmachine's pages 83 and 88 (253 and 710 TextObjects, 5 images, 66
 annotations between them) conform to both sets of shapes with the module as
-shipped.
+shipped, both as generated offline from the fixtures runner and as served live
+by <https://www.goudatijdmachine.nl/omeka/api/site_pages/88?format=verhaalhalen-content>.
 
 ## Roadmap
 

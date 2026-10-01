@@ -156,9 +156,13 @@ class RecordSerializer
      */
     protected function firstParagraph(Story $story)
     {
-        foreach ($story->parts as $part) {
-            if ('Head' !== $part->subtype) {
-                return $part->text;
+        // Running prose first: a story that opens with a block quote or a
+        // sidebar (a reading-time note, a colophon) is not described by it.
+        foreach ([['Opener', 'Paragraph'], ['Quote', 'FloatingText', 'Closer', 'Caption']] as $subtypes) {
+            foreach ($story->parts as $part) {
+                if (in_array($part->subtype, $subtypes, true)) {
+                    return $part->text;
+                }
             }
         }
         return '';
