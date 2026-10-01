@@ -1,0 +1,19 @@
+# Keep development files out of the release archive.
+#
+# Omeka builds an addon zip with a plain `git archive`, so what belongs in the
+# distribution is decided here rather than by whatever runs the build:
+# https://omeka.org/s/docs/developer/register_an_addon/
+#
+# The first five entries are Omeka's own recommended list. The rest are this
+# module's: the code style config, the translation notes and the test suite are
+# for working on the module, not for running it. The compiled .mo files stay,
+# since those are what the translator actually reads.
+
+/.gitattributes export-ignore
+/.gitignore export-ignore
+/.tx/ export-ignore
+/language/*.pot export-ignore
+/language/*.po export-ignore
+/.php-cs-fixer.dist.php export-ignore
+/language/README.md export-ignore
+/test/ export-ignore

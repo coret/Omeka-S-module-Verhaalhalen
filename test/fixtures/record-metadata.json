@@ -1,0 +1,81 @@
+{
+  "@context": [
+    "https://verhaalhalen.ruimdetijd.nl/api/1/context.jsonld",
+    {
+      "@base": "https://example.org/api/site_pages/1?format=verhaalhalen",
+      "@language": "nl"
+    }
+  ],
+  "@type": [
+    "MediaObject",
+    "TextObject"
+  ],
+  "@id": "https://example.org/api/site_pages/1?format=verhaalhalen-content",
+  "encodesCreativeWork": {
+    "@id": "https://example.org/api/site_pages/1?format=verhaalhalen"
+  },
+  "headline": "Aanpak Goudse locatiepunten",
+  "alternativeHeadline": "Van bron tot punt",
+  "hasPart": [
+    {
+      "@type": [
+        "TextObject",
+        "Opener"
+      ],
+      "@id": "#text-1",
+      "text": "Een locatiepunt is een coördinaat."
+    },
+    {
+      "@type": [
+        "TextObject",
+        "Head"
+      ],
+      "@id": "#head-1",
+      "text": "Context"
+    },
+    {
+      "@type": [
+        "TextObject",
+        "Paragraph"
+      ],
+      "@id": "#text-2",
+      "text": "Zie Amsterdam.",
+      "associatedMedia": [
+        {
+          "@type": "ImageObject",
+          "@id": "#image-1",
+          "contentUrl": "https://example.org/files/kaart.png",
+          "encodingFormat": "image/png",
+          "caption": "Kaart"
+        },
+        {
+          "@type": "ImageObject",
+          "@id": "#image-2",
+          "contentUrl": "https://example.org/files/original/x.jpg",
+          "encodingFormat": "image/jpeg",
+          "caption": "Bijschrift"
+        }
+      ]
+    }
+  ],
+  "annotations": [
+    {
+      "@id": "#annotation-1",
+      "@type": "Annotation",
+      "motivation": "linking",
+      "target": {
+        "source": "#text-2",
+        "selector": {
+          "@type": "TextPositionSelector",
+          "start": 4,
+          "end": 13
+        }
+      },
+      "body": {
+        "@id": "http://www.wikidata.org/entity/Q727",
+        "@type": "Thing",
+        "url": "http://www.wikidata.org/entity/Q727"
+      }
+    }
+  ]
+}

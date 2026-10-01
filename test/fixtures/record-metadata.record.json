@@ -1,0 +1,136 @@
+{
+  "@context": "https://schema.org",
+  "@type": [
+    "CreativeWork",
+    "Article"
+  ],
+  "@id": "https://example.org/api/site_pages/1?format=verhaalhalen",
+  "identifier": "fixture",
+  "url": {
+    "@id": "https://example.org/s/demo/page/fixture"
+  },
+  "inLanguage": "nl",
+  "dateCreated": {
+    "@type": "Date",
+    "@value": "2026-09-20"
+  },
+  "dateModified": {
+    "@type": "Date",
+    "@value": "2026-09-25"
+  },
+  "sdDatePublished": {
+    "@type": "Date",
+    "@value": "2026-10-01"
+  },
+  "creator": {
+    "@type": "Organization",
+    "name": {
+      "@language": "nl",
+      "@value": "Gouda Tijdmachine"
+    },
+    "url": {
+      "@id": "https://www.goudatijdmachine.nl/"
+    }
+  },
+  "isPartOf": {
+    "@id": "https://n2t.net/ark:/60537/bD64Hu",
+    "@type": "Dataset",
+    "name": {
+      "@language": "nl",
+      "@value": "Gouda Tijdmachine 🕓 Kennisgraaf"
+    }
+  },
+  "additionalType": {
+    "@type": "DefinedTerm",
+    "name": {
+      "@language": "nl",
+      "@value": "verhaal"
+    }
+  },
+  "name": {
+    "@language": "nl",
+    "@value": "Aanpak Goudse locatiepunten"
+  },
+  "abstract": {
+    "@language": "nl",
+    "@value": "Korte samenvatting."
+  },
+  "description": {
+    "@language": "nl",
+    "@value": "Langere beschrijving."
+  },
+  "text": {
+    "@language": "nl",
+    "@value": "Een locatiepunt is een coördinaat. Context Zie Amsterdam."
+  },
+  "temporalCoverage": "1572/1832",
+  "license": {
+    "@id": "https://creativecommons.org/licenses/by-sa/4.0/"
+  },
+  "genre": {
+    "@type": "DefinedTerm",
+    "name": {
+      "@language": "nl",
+      "@value": "onderzoeksverslag"
+    }
+  },
+  "about": [
+    {
+      "@type": [
+        "Place",
+        "DefinedTerm"
+      ],
+      "name": {
+        "@language": "nl",
+        "@value": "Gouda"
+      },
+      "sameAs": {
+        "@id": "http://www.wikidata.org/entity/Q13395"
+      }
+    }
+  ],
+  "associatedMedia": [
+    {
+      "@type": "ImageObject",
+      "@id": "https://example.org/api/site_pages/1?format=verhaalhalen#image-1",
+      "contentUrl": {
+        "@id": "https://example.org/files/kaart.png"
+      },
+      "thumbnailUrl": {
+        "@id": "https://example.org/files/kaart.png"
+      },
+      "encodingFormat": "image/png",
+      "license": {
+        "@id": "https://creativecommons.org/licenses/by/4.0/"
+      }
+    },
+    {
+      "@type": "ImageObject",
+      "@id": "https://example.org/api/site_pages/1?format=verhaalhalen#image-2",
+      "contentUrl": {
+        "@id": "https://example.org/files/original/x.jpg"
+      },
+      "thumbnailUrl": {
+        "@id": "https://example.org/files/large/x.jpg"
+      },
+      "encodingFormat": "image/jpeg",
+      "license": {
+        "@id": "https://creativecommons.org/publicdomain/zero/1.0/"
+      }
+    },
+    {
+      "@id": "https://example.org/api/site_pages/1?format=verhaalhalen-content",
+      "@type": [
+        "MediaObject",
+        "TextObject"
+      ],
+      "contentUrl": {
+        "@id": "https://example.org/api/site_pages/1?format=verhaalhalen-content"
+      },
+      "encodingFormat": "application/ld+json;profile='https://verhaalhalen.ruimdetijd.nl/api/1/context.jsonld'",
+      "license": {
+        "@id": "https://creativecommons.org/licenses/by-sa/4.0/"
+      }
+    }
+  ]
+}

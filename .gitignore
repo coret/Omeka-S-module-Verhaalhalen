@@ -1,0 +1,10 @@
+# PHP CS Fixer writes its cache here; it is machine-local, never committed.
+.php-cs-fixer.cache
+
+# Release tooling and its output, deliberately not published.
+/release.sh
+/dist/
+
+# Unlike the sibling modules, test/ IS published: its fixtures are the worked
+# examples behind the mapping tables in the README. release.sh still prunes
+# it from the release zip.

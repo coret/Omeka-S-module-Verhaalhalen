@@ -1,0 +1,12 @@
+{
+  "title": "Kaal",
+  "language": "nl",
+  "record": true,
+  "fragments": [
+    {
+      "type": "html",
+      "html": "<h2>Kop</h2><p>Eerste alinea.</p><p>Tweede.</p>"
+    }
+  ],
+  "metadata": {}
+}

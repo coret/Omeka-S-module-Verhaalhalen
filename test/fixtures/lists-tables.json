@@ -1,0 +1,108 @@
+{
+  "@context": [
+    "https://verhaalhalen.ruimdetijd.nl/api/1/context.jsonld",
+    {
+      "@base": "https://example.org/api/site_pages/1?format=verhaalhalen",
+      "@language": "nl"
+    }
+  ],
+  "@type": [
+    "MediaObject",
+    "TextObject"
+  ],
+  "@id": "https://example.org/api/site_pages/1?format=verhaalhalen-content",
+  "encodesCreativeWork": {
+    "@id": "https://example.org/api/site_pages/1?format=verhaalhalen"
+  },
+  "headline": "Fixture",
+  "hasPart": [
+    {
+      "@type": [
+        "TextObject",
+        "Paragraph"
+      ],
+      "@id": "#text-1",
+      "text": "Een"
+    },
+    {
+      "@type": [
+        "TextObject",
+        "Paragraph"
+      ],
+      "@id": "#text-2",
+      "text": "Twee"
+    },
+    {
+      "@type": [
+        "TextObject",
+        "Paragraph"
+      ],
+      "@id": "#text-3",
+      "text": "Twee-a"
+    },
+    {
+      "@type": [
+        "TextObject",
+        "Paragraph"
+      ],
+      "@id": "#text-4",
+      "text": "Drie"
+    },
+    {
+      "@type": [
+        "TextObject",
+        "Caption"
+      ],
+      "@id": "#text-5",
+      "text": "Tabel A"
+    },
+    {
+      "@type": [
+        "TextObject",
+        "Paragraph"
+      ],
+      "@id": "#text-6",
+      "text": "Kop 1 | Kop 2"
+    },
+    {
+      "@type": [
+        "TextObject",
+        "Paragraph"
+      ],
+      "@id": "#text-7",
+      "text": "a | b"
+    },
+    {
+      "@type": [
+        "TextObject",
+        "Paragraph"
+      ],
+      "@id": "#text-8",
+      "text": "| c"
+    },
+    {
+      "@type": [
+        "TextObject",
+        "Paragraph"
+      ],
+      "@id": "#text-9",
+      "text": "Term"
+    },
+    {
+      "@type": [
+        "TextObject",
+        "Paragraph"
+      ],
+      "@id": "#text-10",
+      "text": "Uitleg"
+    },
+    {
+      "@type": [
+        "TextObject",
+        "Paragraph"
+      ],
+      "@id": "#text-11",
+      "text": "SELECT * WHERE { ?s ?p ?o }"
+    }
+  ]
+}

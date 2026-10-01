@@ -1,0 +1,72 @@
+{
+  "@context": [
+    "https://verhaalhalen.ruimdetijd.nl/api/1/context.jsonld",
+    {
+      "@base": "https://example.org/api/site_pages/1?format=verhaalhalen",
+      "@language": "nl"
+    }
+  ],
+  "@type": [
+    "MediaObject",
+    "TextObject"
+  ],
+  "@id": "https://example.org/api/site_pages/1?format=verhaalhalen-content",
+  "encodesCreativeWork": {
+    "@id": "https://example.org/api/site_pages/1?format=verhaalhalen"
+  },
+  "headline": "Fixture",
+  "hasPart": [
+    {
+      "@type": [
+        "TextObject",
+        "Paragraph"
+      ],
+      "@id": "#text-1",
+      "text": "Alinea met inline beeld.",
+      "associatedMedia": [
+        {
+          "@type": "ImageObject",
+          "@id": "#image-2",
+          "contentUrl": "https://example.org/files/b.png",
+          "encodingFormat": "image/png",
+          "caption": "Alt B",
+          "rend": "right"
+        }
+      ]
+    },
+    {
+      "@type": [
+        "TextObject",
+        "Paragraph"
+      ],
+      "@id": "#text-2",
+      "text": "Alinea twee.",
+      "associatedMedia": [
+        {
+          "@type": "ImageObject",
+          "@id": "#image-3",
+          "contentUrl": "https://example.org/files/c.webp",
+          "encodingFormat": "image/webp"
+        }
+      ]
+    },
+    {
+      "@type": [
+        "TextObject",
+        "Caption"
+      ],
+      "@id": "#text-3",
+      "text": "Los onderschrift"
+    }
+  ],
+  "associatedMedia": [
+    {
+      "@type": "ImageObject",
+      "@id": "#image-1",
+      "contentUrl": "https://example.org/files/a.jpg",
+      "encodingFormat": "image/jpeg",
+      "caption": "Onderschrift A",
+      "rend": "right"
+    }
+  ]
+}

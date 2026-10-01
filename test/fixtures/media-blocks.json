@@ -1,0 +1,68 @@
+{
+  "@context": [
+    "https://verhaalhalen.ruimdetijd.nl/api/1/context.jsonld",
+    {
+      "@base": "https://example.org/api/site_pages/1?format=verhaalhalen",
+      "@language": "nl"
+    }
+  ],
+  "@type": [
+    "MediaObject",
+    "TextObject"
+  ],
+  "@id": "https://example.org/api/site_pages/1?format=verhaalhalen-content",
+  "encodesCreativeWork": {
+    "@id": "https://example.org/api/site_pages/1?format=verhaalhalen"
+  },
+  "headline": "Media",
+  "hasPart": [
+    {
+      "@type": [
+        "TextObject",
+        "Paragraph"
+      ],
+      "@id": "#text-1",
+      "text": "Eerste alinea."
+    },
+    {
+      "@type": [
+        "TextObject",
+        "Paragraph"
+      ],
+      "@id": "#text-2",
+      "text": "Tweede alinea.",
+      "associatedMedia": [
+        {
+          "@type": "MediaObject",
+          "@id": "#image-2",
+          "contentUrl": "https://example.org/files/original/rapport.pdf",
+          "encodingFormat": "application/pdf",
+          "caption": "Rapport"
+        },
+        {
+          "@type": "ImageObject",
+          "@id": "#image-3",
+          "contentUrl": "https://example.org/files/los.gif",
+          "encodingFormat": "image/gif"
+        }
+      ]
+    },
+    {
+      "@type": [
+        "TextObject",
+        "Paragraph"
+      ],
+      "@id": "#text-3",
+      "text": "Derde alinea."
+    }
+  ],
+  "associatedMedia": [
+    {
+      "@type": "ImageObject",
+      "@id": "#image-1",
+      "contentUrl": "https://example.org/files/original/kop.jpg",
+      "encodingFormat": "image/jpeg",
+      "caption": "Kopfoto"
+    }
+  ]
+}

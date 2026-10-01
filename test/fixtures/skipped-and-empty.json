@@ -1,0 +1,76 @@
+{
+  "@context": [
+    "https://verhaalhalen.ruimdetijd.nl/api/1/context.jsonld",
+    {
+      "@base": "https://example.org/api/site_pages/1?format=verhaalhalen",
+      "@language": "nl"
+    }
+  ],
+  "@type": [
+    "MediaObject",
+    "TextObject"
+  ],
+  "@id": "https://example.org/api/site_pages/1?format=verhaalhalen-content",
+  "encodesCreativeWork": {
+    "@id": "https://example.org/api/site_pages/1?format=verhaalhalen"
+  },
+  "headline": "Fixture",
+  "hasPart": [
+    {
+      "@type": [
+        "TextObject",
+        "Opener"
+      ],
+      "@id": "#text-1",
+      "text": "Lead-alinea."
+    },
+    {
+      "@type": [
+        "TextObject",
+        "Paragraph"
+      ],
+      "@id": "#text-2",
+      "text": "Losse tekst in een div."
+    },
+    {
+      "@type": [
+        "TextObject",
+        "Paragraph"
+      ],
+      "@id": "#text-3",
+      "text": "Alinea in div."
+    },
+    {
+      "@type": [
+        "TextObject",
+        "Paragraph"
+      ],
+      "@id": "#text-4",
+      "text": "Nog losse tekst."
+    },
+    {
+      "@type": [
+        "TextObject",
+        "Closer"
+      ],
+      "@id": "#text-5",
+      "text": "Slot."
+    },
+    {
+      "@type": [
+        "TextObject",
+        "Paragraph"
+      ],
+      "@id": "#text-6",
+      "text": "Meer"
+    },
+    {
+      "@type": [
+        "TextObject",
+        "Paragraph"
+      ],
+      "@id": "#text-7",
+      "text": "Verborgen."
+    }
+  ]
+}

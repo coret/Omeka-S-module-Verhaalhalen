@@ -1,0 +1,81 @@
+{
+  "@context": "https://schema.org",
+  "@type": [
+    "CreativeWork",
+    "Article"
+  ],
+  "@id": "https://example.org/api/site_pages/1?format=verhaalhalen",
+  "identifier": "fixture",
+  "url": {
+    "@id": "https://example.org/s/demo/page/fixture"
+  },
+  "inLanguage": "nl",
+  "dateCreated": {
+    "@type": "Date",
+    "@value": "2026-09-20"
+  },
+  "dateModified": {
+    "@type": "Date",
+    "@value": "2026-09-25"
+  },
+  "sdDatePublished": {
+    "@type": "Date",
+    "@value": "2026-10-01"
+  },
+  "creator": {
+    "@type": "Organization",
+    "name": {
+      "@language": "nl",
+      "@value": "Gouda Tijdmachine"
+    },
+    "url": {
+      "@id": "https://www.goudatijdmachine.nl/"
+    }
+  },
+  "isPartOf": {
+    "@id": "https://n2t.net/ark:/60537/bD64Hu",
+    "@type": "Dataset",
+    "name": {
+      "@language": "nl",
+      "@value": "Gouda Tijdmachine 🕓 Kennisgraaf"
+    }
+  },
+  "additionalType": {
+    "@type": "DefinedTerm",
+    "name": {
+      "@language": "nl",
+      "@value": "verhaal"
+    }
+  },
+  "name": {
+    "@language": "nl",
+    "@value": "Kaal"
+  },
+  "description": {
+    "@language": "nl",
+    "@value": "Eerste alinea."
+  },
+  "text": {
+    "@language": "nl",
+    "@value": "Kop Eerste alinea. Tweede."
+  },
+  "license": {
+    "@id": "https://creativecommons.org/licenses/by/4.0/"
+  },
+  "associatedMedia": [
+    {
+      "@id": "https://example.org/api/site_pages/1?format=verhaalhalen-content",
+      "@type": [
+        "MediaObject",
+        "TextObject"
+      ],
+      "contentUrl": {
+        "@id": "https://example.org/api/site_pages/1?format=verhaalhalen-content"
+      },
+      "encodingFormat": "application/ld+json;profile='https://verhaalhalen.ruimdetijd.nl/api/1/context.jsonld'",
+      "license": {
+        "@id": "https://creativecommons.org/licenses/by/4.0/"
+      }
+    }
+  ]
+}

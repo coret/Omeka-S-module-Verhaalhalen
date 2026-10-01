@@ -1,0 +1,112 @@
+{
+  "@context": [
+    "https://verhaalhalen.ruimdetijd.nl/api/1/context.jsonld",
+    {
+      "@base": "https://example.org/api/site_pages/1?format=verhaalhalen",
+      "@language": "nl"
+    }
+  ],
+  "@type": [
+    "MediaObject",
+    "TextObject"
+  ],
+  "@id": "https://example.org/api/site_pages/1?format=verhaalhalen-content",
+  "encodesCreativeWork": {
+    "@id": "https://example.org/api/site_pages/1?format=verhaalhalen"
+  },
+  "headline": "Fixture",
+  "hasPart": [
+    {
+      "@type": [
+        "TextObject",
+        "Paragraph"
+      ],
+      "@id": "#text-1",
+      "text": "Geboren in Gouda, zie Frankfurt en interne link en Jan. Een gemarkeerd woord en Anne."
+    }
+  ],
+  "annotations": [
+    {
+      "@id": "#annotation-1",
+      "@type": "Annotation",
+      "motivation": "linking",
+      "target": {
+        "source": "#text-1",
+        "selector": {
+          "@type": "TextPositionSelector",
+          "start": 11,
+          "end": 16
+        }
+      },
+      "body": {
+        "@type": "Thing",
+        "url": "https://nl.wikipedia.org/wiki/Gouda"
+      }
+    },
+    {
+      "@id": "#annotation-2",
+      "@type": "Annotation",
+      "motivation": "linking",
+      "target": {
+        "source": "#text-1",
+        "selector": {
+          "@type": "TextPositionSelector",
+          "start": 22,
+          "end": 31
+        }
+      },
+      "body": {
+        "@id": "http://www.wikidata.org/entity/Q1794",
+        "@type": "Thing",
+        "url": "http://www.wikidata.org/entity/Q1794"
+      }
+    },
+    {
+      "@id": "#annotation-3",
+      "@type": "Annotation",
+      "motivation": "linking",
+      "target": {
+        "source": "#text-1",
+        "selector": {
+          "@type": "TextPositionSelector",
+          "start": 51,
+          "end": 54
+        }
+      },
+      "body": {
+        "@type": "Person",
+        "url": "https://example.org/x"
+      }
+    },
+    {
+      "@id": "#annotation-4",
+      "@type": "Annotation",
+      "motivation": "oa:highlighting",
+      "target": {
+        "source": "#text-1",
+        "selector": {
+          "@type": "TextPositionSelector",
+          "start": 60,
+          "end": 70
+        }
+      }
+    },
+    {
+      "@id": "#annotation-5",
+      "@type": "Annotation",
+      "motivation": "identifying",
+      "target": {
+        "source": "#text-1",
+        "selector": {
+          "@type": "TextPositionSelector",
+          "start": 80,
+          "end": 84
+        }
+      },
+      "body": {
+        "@type": "Person",
+        "name": "Anne Frank"
+      }
+    }
+  ]
+}

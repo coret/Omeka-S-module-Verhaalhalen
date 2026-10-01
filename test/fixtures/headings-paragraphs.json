@@ -1,0 +1,52 @@
+{
+  "@context": [
+    "https://verhaalhalen.ruimdetijd.nl/api/1/context.jsonld",
+    {
+      "@base": "https://example.org/api/site_pages/1?format=verhaalhalen",
+      "@language": "nl"
+    }
+  ],
+  "@type": [
+    "MediaObject",
+    "TextObject"
+  ],
+  "@id": "https://example.org/api/site_pages/1?format=verhaalhalen-content",
+  "encodesCreativeWork": {
+    "@id": "https://example.org/api/site_pages/1?format=verhaalhalen"
+  },
+  "headline": "Fixture",
+  "hasPart": [
+    {
+      "@type": [
+        "TextObject",
+        "Head"
+      ],
+      "@id": "#head-1",
+      "text": "Inleiding"
+    },
+    {
+      "@type": [
+        "TextObject",
+        "Paragraph"
+      ],
+      "@id": "#text-1",
+      "text": "Eerste alinea met vet en cursief."
+    },
+    {
+      "@type": [
+        "TextObject",
+        "Head"
+      ],
+      "@id": "#head-2",
+      "text": "Deelkop"
+    },
+    {
+      "@type": [
+        "TextObject",
+        "Paragraph"
+      ],
+      "@id": "#text-2",
+      "text": "Tweede alinea."
+    }
+  ]
+}

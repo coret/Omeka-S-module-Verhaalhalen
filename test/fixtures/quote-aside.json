@@ -1,0 +1,60 @@
+{
+  "@context": [
+    "https://verhaalhalen.ruimdetijd.nl/api/1/context.jsonld",
+    {
+      "@base": "https://example.org/api/site_pages/1?format=verhaalhalen",
+      "@language": "nl"
+    }
+  ],
+  "@type": [
+    "MediaObject",
+    "TextObject"
+  ],
+  "@id": "https://example.org/api/site_pages/1?format=verhaalhalen-content",
+  "encodesCreativeWork": {
+    "@id": "https://example.org/api/site_pages/1?format=verhaalhalen"
+  },
+  "headline": "Fixture",
+  "hasPart": [
+    {
+      "@type": [
+        "TextObject",
+        "Paragraph"
+      ],
+      "@id": "#text-1",
+      "text": "Intro."
+    },
+    {
+      "@type": [
+        "TextObject",
+        "Quote"
+      ],
+      "@id": "#text-2",
+      "text": "Eerste citaatalinea."
+    },
+    {
+      "@type": [
+        "TextObject",
+        "Quote"
+      ],
+      "@id": "#text-3",
+      "text": "Tweede citaatalinea."
+    },
+    {
+      "@type": [
+        "TextObject",
+        "Quote"
+      ],
+      "@id": "#text-4",
+      "text": "Los citaat zonder p."
+    },
+    {
+      "@type": [
+        "TextObject",
+        "FloatingText"
+      ],
+      "@id": "#text-5",
+      "text": "Kadertekst."
+    }
+  ]
+}

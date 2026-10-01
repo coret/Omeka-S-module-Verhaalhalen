@@ -1,0 +1,31 @@
+{
+  "title": "Media",
+  "language": "nl",
+  "fragments": [
+    {
+      "type": "image",
+      "contentUrl": "https://example.org/files/original/kop.jpg",
+      "thumbnailUrl": "https://example.org/files/large/kop.jpg",
+      "encodingFormat": "image/jpeg",
+      "caption": "Kopfoto"
+    },
+    {
+      "type": "html",
+      "html": "<p>Eerste alinea.</p><p>Tweede alinea.</p>"
+    },
+    {
+      "type": "image",
+      "contentUrl": "https://example.org/files/original/rapport.pdf",
+      "encodingFormat": "application/pdf",
+      "caption": "Rapport"
+    },
+    {
+      "type": "html",
+      "html": "<figure><img src=\"https://example.org/files/los.gif\"></figure><p>Derde alinea.</p>"
+    },
+    {
+      "type": "ignored"
+    }
+  ],
+  "metadata": {}
+}

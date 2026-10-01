@@ -1,0 +1,56 @@
+{
+  "title": "Aanpak Goudse locatiepunten",
+  "language": "nl",
+  "record": true,
+  "fragments": [
+    {
+      "type": "html",
+      "html": "<p class=\"lead\">Een locatiepunt is een coördinaat.</p><h2>Context</h2><p>Zie <a href=\"http://www.wikidata.org/entity/Q727\">Amsterdam</a>.</p><figure><img src=\"https://example.org/files/kaart.png\" alt=\"Kaart\"></figure>"
+    },
+    {
+      "type": "image",
+      "contentUrl": "https://example.org/files/original/x.jpg",
+      "thumbnailUrl": "https://example.org/files/large/x.jpg",
+      "encodingFormat": "image/jpeg",
+      "caption": "Bijschrift",
+      "license": "https://creativecommons.org/publicdomain/zero/1.0/"
+    }
+  ],
+  "metadata": {
+    "subtitle": "Van bron tot punt",
+    "abstract": "Korte samenvatting.",
+    "description": "Langere beschrijving.",
+    "license": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "temporal_coverage": "1572/1832",
+    "jsonld": {
+      "about": [
+        {
+          "@type": [
+            "Place",
+            "DefinedTerm"
+          ],
+          "name": {
+            "@language": "nl",
+            "@value": "Gouda"
+          },
+          "sameAs": {
+            "@id": "http://www.wikidata.org/entity/Q13395"
+          }
+        }
+      ],
+      "genre": {
+        "@type": "DefinedTerm",
+        "name": {
+          "@language": "nl",
+          "@value": "onderzoeksverslag"
+        }
+      },
+      "@id": "https://evil.example/",
+      "hasPart": [
+        "x"
+      ],
+      "headline": "nee",
+      "associatedMedia": []
+    }
+  }
+}

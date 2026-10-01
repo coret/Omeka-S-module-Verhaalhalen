@@ -1,0 +1,102 @@
+<?php
+/**
+ * @var array $data      The block's stored data
+ * @var array $reserved  JSON-LD keys the block may not set
+ *
+ * Ids are deliberately absent: Omeka rewrites __blockIndex__ in each input's
+ * name and derives the id from it, so hard-coded ids would collide if a page
+ * ever held two of these blocks.
+ */
+$escape = $this->plugin('escapeHtml');
+$attr = $this->plugin('escapeHtmlAttr');
+$translate = $this->plugin('translate');
+
+$value = function ($key) use ($data) {
+    return isset($data[$key]) ? $data[$key] : '';
+};
+
+$exampleJsonLd = <<<'JSON'
+{
+  "about": [
+    {
+      "@type": ["Person", "DefinedTerm"],
+      "name": {"@language": "nl", "@value": "Anne Frank"},
+      "sameAs": {"@id": "http://www.wikidata.org/entity/Q4583"}
+    }
+  ],
+  "contentLocation": [
+    {
+      "@type": ["Place", "DefinedTerm"],
+      "name": {"@language": "nl", "@value": "Gouda"},
+      "sameAs": {"@id": "http://www.wikidata.org/entity/Q13395"}
+    }
+  ]
+}
+JSON;
+?>
+<p class="field-description">
+    <?php echo $translate('This block renders nothing on the page. It marks the page as a story for the Verhaalhalen formats (format=verhaalhalen and format=verhaalhalen-content on the page\'s API URL) and supplies the record with what the page itself cannot say.'); ?>
+</p>
+
+<div class="field">
+    <div class="field-meta">
+        <label><?php echo $translate('Subtitle'); ?></label>
+        <div class="field-description"><?php echo $translate('Rendered below the title (alternativeHeadline).'); ?></div>
+    </div>
+    <div class="inputs">
+        <input type="text" name="o:block[__blockIndex__][o:data][subtitle]" value="<?php echo $attr($value('subtitle')); ?>">
+    </div>
+</div>
+
+<div class="field">
+    <div class="field-meta">
+        <label><?php echo $translate('Abstract'); ?></label>
+        <div class="field-description"><?php echo $translate('One or two sentences (schema:abstract).'); ?></div>
+    </div>
+    <div class="inputs">
+        <textarea name="o:block[__blockIndex__][o:data][abstract]" rows="3"><?php echo $escape($value('abstract')); ?></textarea>
+    </div>
+</div>
+
+<div class="field">
+    <div class="field-meta">
+        <label><?php echo $translate('Description'); ?></label>
+        <div class="field-description"><?php echo $translate('A longer description (schema:description). When empty, the first paragraph of the text is used.'); ?></div>
+    </div>
+    <div class="inputs">
+        <textarea name="o:block[__blockIndex__][o:data][description]" rows="5"><?php echo $escape($value('description')); ?></textarea>
+    </div>
+</div>
+
+<div class="field">
+    <div class="field-meta">
+        <label><?php echo $translate('Licence'); ?></label>
+        <div class="field-description"><?php echo $translate('URL of the licence of the text, when it differs from the configured default, e.g. https://creativecommons.org/licenses/by-sa/4.0/.'); ?></div>
+    </div>
+    <div class="inputs">
+        <input type="url" name="o:block[__blockIndex__][o:data][license]" value="<?php echo $attr($value('license')); ?>">
+    </div>
+</div>
+
+<div class="field">
+    <div class="field-meta">
+        <label><?php echo $translate('Period'); ?></label>
+        <div class="field-description"><?php echo $translate('The period the story is about, as an ISO 8601 interval such as 1572/1795 (schema:temporalCoverage).'); ?></div>
+    </div>
+    <div class="inputs">
+        <input type="text" name="o:block[__blockIndex__][o:data][temporal_coverage]" value="<?php echo $attr($value('temporal_coverage')); ?>" placeholder="1572/1795">
+    </div>
+</div>
+
+<div class="field">
+    <div class="field-meta">
+        <label><?php echo $translate('Additional record properties (JSON-LD)'); ?></label>
+        <div class="field-description">
+            <?php echo $translate('A JSON object of Schema.org properties added to the record, in the plain Schema.org context: about, contentLocation, genre, creator, dateCreated, ... Typically the DefinedTerms found through the Network of Terms. Values here win over the module\'s configuration.'); ?>
+            <?php echo sprintf($translate('Not allowed, because the module writes them itself: %s.'), $escape(implode(', ', $reserved))); ?>
+        </div>
+    </div>
+    <div class="inputs">
+        <textarea name="o:block[__blockIndex__][o:data][jsonld]" rows="12" placeholder="<?php echo $attr($exampleJsonLd); ?>"><?php echo $escape($value('jsonld')); ?></textarea>
+    </div>
+</div>
