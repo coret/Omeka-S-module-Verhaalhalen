@@ -24,17 +24,18 @@ directions. Those findings are in [Design decisions](#design-decisions) and
 
 ## Requesting a story
 
-There is no new route. Every URL is the page's API URL plus a `format`:
+There is no new route. Every URL is the page's API URL plus a `format`. Live,
+for the Gouda Tijdmachine story *Tijddetective Gouda*:
 
 ```bash
 # the record (SCHEMA-AP-NDE CreativeWork)
-curl 'https://example.org/api/site_pages/88?format=verhaalhalen'
+curl 'https://www.goudatijdmachine.nl/omeka/api/site_pages/89?format=verhaalhalen'
 
 # the content (NDE Story TextObject)
-curl 'https://example.org/api/site_pages/88?format=verhaalhalen-content'
+curl 'https://www.goudatijdmachine.nl/omeka/api/site_pages/89?format=verhaalhalen-content'
 
 # a Collection listing the stories, with every API query argument still working
-curl 'https://example.org/api/site_pages?site_id=2&format=verhaalhalen'
+curl 'https://www.goudatijdmachine.nl/omeka/api/site_pages?site_id=2&format=verhaalhalen'
 ```
 
 Add `pretty_print=1` for indented output, as with any Omeka API request.
@@ -60,38 +61,48 @@ document and `Cache-Control: max-age=…` (configurable); a signed-in user gets
 
 ## What comes out
 
+The examples below are the live output for page 89, shortened; the `//`
+comments say where each value comes from.
+
 ### Record (`format=verhaalhalen`)
 
 ```jsonc
 {
   "@context": "https://schema.org",
   "@type": ["CreativeWork", "Article"],
-  "@id": "https://example.org/api/site_pages/88?format=verhaalhalen",
-  "name": {"@language": "nl", "@value": "Aanpak Goudse locatiepunten"},
-  "identifier": "aanpak-goudse-locatiepunten",
-  "url": {"@id": "https://example.org/s/data/page/aanpak-goudse-locatiepunten"},
-  "inLanguage": "nl",
-  "dateCreated": {"@type": "Date", "@value": "2026-09-20"},
-  "dateModified": {"@type": "Date", "@value": "2026-09-25"},
+  "@id": "https://www.goudatijdmachine.nl/omeka/api/site_pages/89?format=verhaalhalen",
+  "name": {"@language": "nl", "@value": "Tijddetective Gouda: stadsgame brengt echte Gouwenaars tot leven"},
+  "identifier": "tijddetective-gouda",                                 // the page slug
+  "url": {"@id": "https://www.goudatijdmachine.nl/omeka/s/data/page/tijddetective-gouda"},
+  "inLanguage": "nl",                                                 // the site's locale
+  "dateCreated": {"@type": "Date", "@value": "2026-10-01"},
+  "dateModified": {"@type": "Date", "@value": "2026-10-01"},
   "sdDatePublished": {"@type": "http://www.w3.org/2001/XMLSchema#date", "@value": "2026-10-01"},
-  "abstract": {"@language": "nl", "@value": "…"},          // from the Verhaalhalen block
-  "description": {"@language": "nl", "@value": "…"},       // block, or the first paragraph
-  "text": {"@language": "nl", "@value": "…"},              // the plain full text, derived
-  "temporalCoverage": "1300/2026",                         // block
-  "creator": {"@type": "Organization", "name": {…}, "url": {"@id": "…"}},   // configuration
-  "license": {"@id": "https://creativecommons.org/licenses/by/4.0/"},        // block or configuration
-  "isPartOf": {"@id": "https://n2t.net/ark:/60537/bD64Hu", "@type": "Dataset", "name": {…}},
-  "additionalType": {"@type": "DefinedTerm", "name": {…}},
-  "about": [ … ],                                          // block JSON-LD
+  "description": {"@language": "nl", "@value": "Gouda heeft er een bijzondere manier bij om de stad te ontdekken. …"},
+                                                                      // Verhaalhalen block, else the first paragraph
+  "text": {"@language": "nl", "@value": "Gouda heeft er een bijzondere manier bij … Historische Vereniging …"},
+                                                                      // the plain full text, derived
+  "creator": {"@type": "Organization", "name": {"@language": "nl", "@value": "Gouda Tijdmachine"},
+              "url": {"@id": "https://www.goudatijdmachine.nl/"}},   // configuration
+  "license": {"@id": "https://creativecommons.org/licenses/by/4.0/"}, // block or configuration
+  "isPartOf": {"@id": "https://n2t.net/ark:/60537/bD64Hu", "@type": "Dataset",
+               "name": {"@language": "nl", "@value": "Gouda Tijdmachine 🕓 Kennisgraaf"}},
+  "additionalType": {"@type": "DefinedTerm", "name": {"@language": "nl", "@value": "verhaal"}},
+  // "abstract", "temporalCoverage", "about", "contentLocation", … appear once the page has a Verhaalhalen block
   "associatedMedia": [
-    {"@type": "ImageObject", "@id": "…?format=verhaalhalen#image-1",
-     "contentUrl": {"@id": "…"}, "thumbnailUrl": {"@id": "…"}, "encodingFormat": "image/png",
-     "license": {"@id": "…"}},
-    {"@id": "…?format=verhaalhalen-content", "@type": ["MediaObject", "TextObject"],
-     "contentUrl": {"@id": "…?format=verhaalhalen-content"},
-     "thumbnailUrl": {"@id": "…?format=verhaalhalen-content"},
+    {"@type": "ImageObject",
+     "@id": "https://www.goudatijdmachine.nl/omeka/api/site_pages/89?format=verhaalhalen#image-1",
+     "contentUrl": {"@id": "https://www.goudatijdmachine.nl/wp-content/uploads/sites/7/2026/09/Lancering-Deddectieve-Gouda-Foto-Rinus-Lasschuyt-28-1024x681-1.jpg"},
+     "thumbnailUrl": {"@id": "https://www.goudatijdmachine.nl/wp-content/uploads/sites/7/2026/09/Lancering-Deddectieve-Gouda-Foto-Rinus-Lasschuyt-28-1024x681-1.jpg"},
+     "encodingFormat": "image/jpeg",
+     "license": {"@id": "https://creativecommons.org/licenses/by/4.0/"}},   // image_license: the <img> carries none
+    { … "#image-2" … }, { … "#image-3" … },
+    {"@id": "https://www.goudatijdmachine.nl/omeka/api/site_pages/89?format=verhaalhalen-content",
+     "@type": ["MediaObject", "TextObject"],
+     "contentUrl": {"@id": "https://www.goudatijdmachine.nl/omeka/api/site_pages/89?format=verhaalhalen-content"},
+     "thumbnailUrl": {"@id": "https://www.goudatijdmachine.nl/omeka/api/site_pages/89?format=verhaalhalen-content"},
      "encodingFormat": "application/ld+json;profile='https://verhaalhalen.ruimdetijd.nl/api/1/context.jsonld'",
-     "license": {"@id": "…"}}
+     "license": {"@id": "https://creativecommons.org/licenses/by/4.0/"}}
   ]
 }
 ```
@@ -102,24 +113,39 @@ document and `Cache-Control: max-age=…` (configurable); a signed-in user gets
 {
   "@context": [
     "https://verhaalhalen.ruimdetijd.nl/api/1/context.jsonld",
-    {"@base": "https://example.org/api/site_pages/88?format=verhaalhalen", "@language": "nl"}
+    {"@base": "https://www.goudatijdmachine.nl/omeka/api/site_pages/89?format=verhaalhalen", "@language": "nl"}
   ],
   "@type": ["MediaObject", "TextObject"],
-  "@id": "https://example.org/api/site_pages/88?format=verhaalhalen-content",
-  "encodesCreativeWork": {"@id": "https://example.org/api/site_pages/88?format=verhaalhalen"},
-  "headline": "Aanpak Goudse locatiepunten",
-  "alternativeHeadline": "…",                               // block subtitle, if any
+  "@id": "https://www.goudatijdmachine.nl/omeka/api/site_pages/89?format=verhaalhalen-content",
+  "encodesCreativeWork": {"@id": "https://www.goudatijdmachine.nl/omeka/api/site_pages/89?format=verhaalhalen"},
+  "headline": "Tijddetective Gouda: stadsgame brengt echte Gouwenaars tot leven",
+  // "alternativeHeadline": the block's subtitle, if any
   "hasPart": [
-    {"@type": ["TextObject", "Quote"],     "@id": "#text-1", "text": "Leestijd: …"},
-    {"@type": ["TextObject", "Head"],      "@id": "#head-1", "text": "Samenvatting"},
-    {"@type": ["TextObject", "Paragraph"], "@id": "#text-2", "text": "Een locatiepunt is …",
-     "associatedMedia": [{"@type": "ImageObject", "@id": "#image-1", "contentUrl": "…",
-                          "encodingFormat": "image/svg+xml", "caption": "…", "rend": "right"}]}
+    {"@type": ["TextObject", "Paragraph"], "@id": "#text-1",
+     "text": "Gouda heeft er een bijzondere manier bij om de stad te ontdekken. Op zaterdag 12 september werd in de tuin van Museum Gouda de nieuwe stadsgame Tijddetective Gouda gelanceerd. …"},
+    { … "#text-2" … }, { … "#text-3" … }, { … "#text-4" … },
+    {"@type": ["TextObject", "Paragraph"], "@id": "#text-5",
+     "text": "De lancering vond plaats tijdens Open Monumentendag. Drie historische figuren uit de game kwamen tot leven …",
+     "associatedMedia": [                                                 // an <img> inside this paragraph
+       {"@type": "ImageObject", "@id": "#image-2",
+        "contentUrl": "https://www.goudatijdmachine.nl/wp-content/uploads/sites/7/2026/09/Lancering-Deddectieve-Gouda-Foto-Rinus-Lasschuyt-21-1024x681.jpg",
+        "encodingFormat": "image/jpeg", "caption": "Foto: Rinus Lasschuyt"}]},
+    {"@type": ["TextObject", "Paragraph"], "@id": "#text-6",
+     "text": "Ga naar game.goudatijdmachine.nl of scan de onderstaande QR-code om het spel te spelen. …"},
+    {"@type": ["TextObject", "Paragraph"], "@id": "#text-7", "text": "Tijddetective Gouda is een gezamenlijk project van Museum Gouda en de Gouda Tijdmachine …",
+     "associatedMedia": [{"@type": "ImageObject", "@id": "#image-3",
+        "contentUrl": "https://www.goudatijdmachine.nl/wp-content/uploads/sites/7/2026/09/qr-code-tijddetective-gouda.png",
+        "encodingFormat": "image/png"}]}
   ],
-  "annotations": [
+  "associatedMedia": [                                                     // an image before the first paragraph: story-level
+    {"@type": "ImageObject", "@id": "#image-1",
+     "contentUrl": "https://www.goudatijdmachine.nl/wp-content/uploads/sites/7/2026/09/Lancering-Deddectieve-Gouda-Foto-Rinus-Lasschuyt-28-1024x681-1.jpg",
+     "encodingFormat": "image/jpeg"}
+  ],
+  "annotations": [                                                         // the one hyperlink in the text
     {"@id": "#annotation-1", "@type": "Annotation", "motivation": "linking",
-     "target": {"source": "#text-2", "selector": {"@type": "TextPositionSelector", "start": 70, "end": 87}},
-     "body": {"@id": "http://www.wikidata.org/entity/Q13395", "@type": "Thing", "url": "http://www.wikidata.org/entity/Q13395"}}
+     "target": {"source": "#text-6", "selector": {"@type": "TextPositionSelector", "start": 8, "end": 32}},
+     "body": {"@type": "Thing", "url": "https://game.goudatijdmachine.nl/"}}
   ]
 }
 ```
@@ -133,12 +159,12 @@ The spec leaves listing to the implementation. This mirrors Verhaalhalen's own
 {
   "@context": "https://verhaalhalen.ruimdetijd.nl/api/1/context.jsonld",
   "@type": "Collection",
-  "@id": "https://example.org/api/site_pages?site_id=2&format=verhaalhalen",
+  "@id": "https://www.goudatijdmachine.nl/omeka/api/site_pages?site_id=2&format=verhaalhalen",
   "name": "Gouda Tijdmachine",
   "hasPart": [
-    {"@id": "https://example.org/api/site_pages/88?format=verhaalhalen",
+    {"@id": "https://www.goudatijdmachine.nl/omeka/api/site_pages/89?format=verhaalhalen",
      "@type": ["CreativeWork", "Article"],
-     "name": {"@language": "nl", "@value": "Aanpak Goudse locatiepunten"}}
+     "name": {"@language": "nl", "@value": "Tijddetective Gouda: stadsgame brengt echte Gouwenaars tot leven"}}
   ]
 }
 ```
@@ -180,12 +206,12 @@ block or no block — the block then merely adds metadata and the configuration
 supplies the rest.
 
 Like any block it can be written through the API. A `PUT` on
-`/api/site_pages/{id}` with the page's full `o:block` list plus
+`/api/site_pages/89` with the page's full `o:block` list plus
 
 ```json
 {"o:layout": "verhaalhalen", "o:data": {
-  "abstract": "Hoe Gouda Tijdmachine locatiepunten als vaste haak gebruikt.",
-  "temporal_coverage": "1300/2026",
+  "abstract": "Museum Gouda en Gouda Tijdmachine lanceren een stadsgame waarin spelers historische Gouwenaars opsporen.",
+  "temporal_coverage": "2026-09-12",
   "jsonld": "{\"about\": [{\"@type\": [\"Place\", \"DefinedTerm\"], \"name\": {\"@language\": \"nl\", \"@value\": \"Gouda\"}, \"sameAs\": {\"@id\": \"http://www.wikidata.org/entity/Q13395\"}}]}"
 }}
 ```
@@ -420,8 +446,8 @@ The content document is defined by SHACL shapes; the record by SCHEMA-AP-NDE's.
 With [Apache Jena](https://jena.apache.org/) (`riot`, `shacl`):
 
 ```bash
-curl -s 'https://example.org/api/site_pages/88?format=verhaalhalen-content' -o content.json
-curl -s 'https://example.org/api/site_pages/88?format=verhaalhalen' -o record.json
+curl -s 'https://www.goudatijdmachine.nl/omeka/api/site_pages/89?format=verhaalhalen-content' -o content.json
+curl -s 'https://www.goudatijdmachine.nl/omeka/api/site_pages/89?format=verhaalhalen' -o record.json
 curl -s https://verhaalhalen.ruimdetijd.nl/api/1/shapes -o story-shapes.ttl
 curl -sL https://raw.githubusercontent.com/netwerk-digitaal-erfgoed/schema-profile/main/shacl.ttl -o profile.ttl
 
@@ -439,10 +465,10 @@ matches no shape and "conforms" vacuously. And Jena fetches the remote contexts
 (`anno.jsonld`, the Schema.org context) at run time, which can be slow; pointing
 `@context` at local copies avoids that.
 
-Gouda Tijdmachine's pages 83 and 88 (253 and 710 TextObjects, 5 images, 66
-annotations between them) conform to both sets of shapes with the module as
-shipped, both as generated offline from the fixtures runner and as served live
-by <https://www.goudatijdmachine.nl/omeka/api/site_pages/88?format=verhaalhalen-content>.
+Gouda Tijdmachine's pages 83, 88 and 89 (253, 710 and 7 TextObjects, 8 images
+and 67 annotations between them) conform to both sets of shapes with the module
+as shipped, both as generated offline from the fixtures runner and as served
+live, e.g. <https://www.goudatijdmachine.nl/omeka/api/site_pages/89?format=verhaalhalen-content>.
 
 ## Roadmap
 
