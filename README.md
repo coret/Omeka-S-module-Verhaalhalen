@@ -2,8 +2,8 @@
 
 Omeka S module that publishes site pages as **NDE Story** documents, the
 [*NDE Story: Text Content API*](https://verhaalhalen.ruimdetijd.nl/spec/)
-drafted for Verhaalhalen (Netwerk Digitaal Erfgoed / Ruimdetijd, v1.0 draft,
-1 October 2026). A story becomes two JSON-LD documents:
+drafted for Verhaalhalen (Netwerk Digitaal Erfgoed / Ruimdetijd, v1.0.0-draft.1,
+8 October 2026). A story becomes two JSON-LD documents:
 
 | Document | `@type` | What it is |
 |---|---|---|
